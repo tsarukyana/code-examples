@@ -1,0 +1,119 @@
+<section class="p-user-profile-email">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3-c col-md-3 col-sm-3 col-12">
+        <div class="left-nevigation">
+          <ul>
+            <li><a routerLink="/user/profile">Profile</a></li>
+            <li><a routerLink="/user/password">Change Password</a></li>
+            <li class="active"><a routerLink="/user/email">Change Email</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9-c col-md-9 col-sm-9 col-12">
+        <div class="heading-edit">
+          <h2>Profile</h2>
+        </div>
+        <form (ngSubmit)='changeEmail()' [formGroup]="changeEmailForm">
+          <div class="">
+            <div class="heading-edit-ico">
+              <h3 class="subheading-panel">Change Email Address</h3>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-12 col-12">
+                <div>
+                  <ng-template #oldEmailPopContent>
+                    <div class='blackStd' *ngIf='form.oldEmail.errors && form.oldEmail.errors.required'> The email is
+                      required
+                    </div>
+
+                    <div class='blackStd'
+                         *ngIf='form.oldEmail.errors && form.oldEmail.errors.email || isOldEmailIncorrect'> Your old
+                      Email is incorrect
+                    </div>
+
+                  </ng-template>
+                  <label class="secondary-field-label">Current Email</label>
+                  <input type="email" (input)="EmailIsCorrectOrNot()" name="oldEmail" formControlName="oldEmail"
+                         #popoverOldEmail="ngbPopover"
+                         [autoClose]="false"
+                         triggers="manual"
+                         (focus)="popoverOldEmail.open()"
+                         (blur)="popoverOldEmail.close()"
+                         [ngbPopover]="oldEmailPopContent"
+                         class="secondary-field user-email"
+                         placeholder="Old Email">
+                </div>
+                <div class="mt-4">
+                  <ng-template #newEmailPopContent>
+                    <div class='blackStd' *ngIf='form.newEmail.errors && form.newEmail.errors.required'> The email is
+                      required
+                    </div>
+
+
+                    <div class='blackStd' *ngIf='form.newEmail.errors && form.newEmail.errors.email'>
+                      ex:test@test.com
+                    </div>
+
+                    <div class='blackStd' *ngIf='form.newEmail.errors && form.newEmail.errors.uniqueEmail'>
+                      Email is already registered with dineoutwith.us
+                    </div>
+                  </ng-template>
+                  <label class="secondary-field-label">New Email</label>
+                  <input type="email" name="newEmail" formControlName="newEmail"
+                         #popoverNewEmail="ngbPopover"
+                         [autoClose]="false"
+                         triggers="manual"
+                         (focus)="popoverNewEmail.open()"
+                         (blur)="popoverNewEmail.close()"
+                         [ngbPopover]="newEmailPopContent"
+                         class="secondary-field user-email"
+                         placeholder="New Email">
+                </div>
+                <div class="mt-4">
+                  <ng-template #confirmEmailPopContent>
+                    <div class='blackStd' *ngIf='form.confirmEmail.errors && form.confirmEmail.errors.required'>
+                      Verify Email is Required
+                    </div>
+                    <div class='blackStd' *ngIf='!form.confirmEmail.errors'>This is valid</div>
+                    <div class='blackStd' *ngIf='form.confirmEmail.errors && form.confirmEmail.errors.confirmEmail'>
+                      New and Verify fields must match
+                    </div>
+                  </ng-template>
+                  <label class="secondary-field-label">Verify Email</label>
+                  <input type="email" name="confirmEmail" formControlName="confirmEmail"
+                         #popoverVerifyEmail="ngbPopover"
+                         [autoClose]="false"
+                         triggers="manual"
+                         (focus)="popoverVerifyEmail.open()"
+                         (blur)="popoverVerifyEmail.close()"
+                         [ngbPopover]="confirmEmailPopContent"
+                         class="secondary-field user-email"
+                         placeholder="Confirm New Email">
+                </div>
+              </div>
+            </div>
+            <div class="mt-4">
+              <button class="button-primary-sec text-uppercase" type='submit'
+                      [disabled]='changeEmailForm.invalid || isOldEmailIncorrect'>Change Email
+              </button>
+            </div>
+            <ngx-smart-modal #changeEmailMessage identifier="changeEmailMessage" class="changeEmailMessage"
+                             [dismissable]="false" [closable]="false">
+              <div class="modal-header">
+                <div class='span_11_of_12 font2 heading4 centered modal-title'>Success!</div>
+                <div class="span_1_of_12 close_button">
+                  <a (click)="changeEmailMessage.close(); redirect()"><i class="fa fa-close"></i></a>
+                </div>
+              </div>
+              <div class="modal-body">
+                Your email address has been successfully changed!
+              </div>
+            </ngx-smart-modal>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</section>

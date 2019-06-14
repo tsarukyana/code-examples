@@ -1,0 +1,102 @@
+<section class="p-user-profile">
+  <form (ngSubmit)="updateUserWithEdited()" [formGroup]="userProfileForm">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3-c col-md-3 col-sm-3 col-12">
+          <div class="left-nevigation">
+            <ul>
+              <li class="active"><a routerLink="/user/profile">Profile</a></li>
+              <li><a routerLink="/user/password">Change Password</a></li>
+              <li><a routerLink="/user/email">Change Email</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9-c col-md-9 col-sm-9 col-12">
+          <div>
+            <div class="heading-edit">
+              <h2>Profile</h2>
+            </div>
+            <div class="">
+              <div class="">
+                <h3 class="subheading-panel">Personal Info</h3>
+                <div class="row row-xs">
+                  <div class="col-md-4 col-12">
+                    <label class="secondary-field-label">First Name</label>
+                    <input type="text" class="secondary-field" dowu-capitalize formControlName="firstName"
+                           placeholder="First Name">
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <label class="secondary-field-label">Last Name</label>
+                    <input type="text" class="secondary-field" dowu-capitalize formControlName="lastName"
+                           placeholder="Last Name">
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <label class="secondary-field-label">Email Address</label>
+                    <input type="text" class="secondary-field" dowu-capitalize
+                           placeholder="Email" value="{{user.email}}" disabled>
+                  </div>
+                </div>
+
+                <div class="row row-xs mt-4">
+                  <div class="col-md-5">
+                    <label class="secondary-field-label">Street Address</label>
+                    <input type="text" class="secondary-field" formControlName="street" placeholder="Street Address">
+                  </div>
+                  <div class="col-md-3">
+                    <label class="secondary-field-label">City</label>
+                    <input type="text" class="secondary-field" formControlName="city" placeholder="City"
+                           autocomplete='off'>
+                  </div>
+                  <div class="col-md-2">
+                    <label class="secondary-field-label">State</label>
+                    <input type="text" class="secondary-field" formControlName="state" placeholder="State"
+                           autocomplete='off'>
+                  </div>
+                  <div class="col-md-2">
+                    <ng-template #zipCodePopContent>
+
+                      <div class='blackStd' *ngIf='form.zip.errors && form.zip.errors.invalid'> Invalid Zip Code</div>
+                    </ng-template>
+
+                    <label class="secondary-field-label">Zip Code</label>
+                    <input type="text" class="secondary-field" formControlName="zip" (input)="getCityAndStateByZip()"
+                           #popoverZipCode="ngbPopover" triggers="manual" (focus)="popoverZipCode.open()"
+                           (blur)="popoverZipCode.close()" [ngbPopover]="zipCodePopContent"
+                           [autoClose]="false" placeholder="Zip" autocomplete='off' required>
+                  </div>
+                </div>
+              </div>
+              <app-allergies-preferences #allergyAndPref [user]="user"></app-allergies-preferences>
+              <div class="form-group d-flex justify-content-end">
+                <button class="button-primary-sec mt-4"
+                  [disabled]='userProfileForm.invalid'>
+                  Save
+                </button>
+              </div>
+            </div>
+            <div class=""></div>
+            <ngx-smart-modal #editProfileMessage identifier="editProfileMessage" class="editProfileMessage"
+                             [dismissable]="false" [closable]="false">
+              <div class="modal-header">
+                <div class="close_button">
+                  <a (click)="editProfileMessage.close()">
+                    <i class="fa fa-close"></i>
+                  </a>
+                </div>
+                <div class='font2 heading4 centered modal-title'>Success!</div>
+              </div>
+              <div class="modal-body">
+                Your profile has been updated.
+                <br>
+                <br>
+              </div>
+            </ngx-smart-modal>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
